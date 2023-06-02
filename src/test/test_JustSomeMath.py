@@ -1,5 +1,5 @@
 import re
-from complexOperations.JustSomeMath import JustSomeMath
+from complexoperations.JustSomeMath import JustSomeMath
 
 class TestJustSomeMath:
     

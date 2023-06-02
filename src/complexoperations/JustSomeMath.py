@@ -3,6 +3,8 @@ from mimetypes import init
 import math
 import random
 
+print("Hello, world.")
+
 class JustSomeMath:
     def __init__(self) -> None:
         pass
