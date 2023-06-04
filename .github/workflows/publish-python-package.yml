@@ -6,9 +6,9 @@ name: Python package CD
 on:
   workflow_run:
     workflows: [ "Python package CI" ]
-    types: [requested]
+    types: [completed]
     branches:
-      - "*"
+      - '*'
 
 jobs:
   build:
@@ -32,3 +32,9 @@ jobs:
     - name: Create Dist
       run: |
         python -m build
+    - name: Publish on TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.TESTPYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
