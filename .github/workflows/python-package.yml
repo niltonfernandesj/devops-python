@@ -50,7 +50,6 @@ jobs:
         python-version: ["3.9"]
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -63,21 +62,14 @@ jobs:
       - name: Create dist
         run: |
           python -m build
-      - name: Publish prerelease
-        if: steps.tagtype.outputs.type == 'pre'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/*"
-          generateRealeaseNotes: true
-          token: ${{ secrets.MY_TOKEN}}
-          prerelease: true
-       - name: Publish release
-        if: steps.tagtype.outputs.type == 'release'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/*"
-          generateRealeaseNotes: true
-          token: ${{ secrets.MY_TOKEN}}
-          prerelease: false
+      - name: Check tag type
+        id: tagtype
+        run: |
+          if [[ ${{ github.event.ref }} =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+[ab][0-9]+$ ]]; then
+              echo ::set-output name=type::pre
+          fi
+          if [[ ${{ github.event.ref }} =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo ::set-output name=type::release
+          fi 
       
       
