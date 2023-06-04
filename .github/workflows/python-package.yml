@@ -62,7 +62,7 @@ jobs:
       - name: Create dist
         run: |
           python -m build
-      - uses: ncipollo/realease-action@v1
+      - uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/*"
           generateRealeaseNotes: true
