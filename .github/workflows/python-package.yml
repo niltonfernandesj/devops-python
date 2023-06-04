@@ -79,7 +79,7 @@ jobs:
           generateRealeaseNotes: true
           token: ${{ secrets.MY_TOKEN }}
           prerelease: true
-       - name: Publish release
+      - name: Publish release
         if: steps.tagtype.outputs.type == 'release'
         uses: ncipollo/release-action@v1
         with:
