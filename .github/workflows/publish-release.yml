@@ -4,7 +4,7 @@ name: Publish on PyPi
 
 on:
   release:
-    types: [released]
+    types: [published]
 
 jobs:
 
@@ -25,8 +25,17 @@ jobs:
           version: tags/${{ github.event.release.tag_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish on PyPI
+        if: "!github.event.release.prerelease"
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
+          skip_existing: true
+      - name: Publish on TestPyPI
+        if: "github.event.release.prerelease"
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TESTPY_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
           skip_existing: true
