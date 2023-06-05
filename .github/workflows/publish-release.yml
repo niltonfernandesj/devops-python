@@ -1,10 +1,10 @@
-#Publish Python package on testpypi
+#Publish Python package on PyPi
 
-name: Publish on TestPyPi
+name: Publish on PyPi
 
 on:
   release:
-    types: [prereleased]
+    types: [released]
 
 jobs:
 
@@ -24,10 +24,9 @@ jobs:
           target: "dist/"
           version: tags/${{ github.event.release.tag_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish on TestPyPI
+      - name: Publish on PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.TESTPY_API_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
+          password: ${{ secrets.PYPI_API_TOKEN }}
           skip_existing: true
